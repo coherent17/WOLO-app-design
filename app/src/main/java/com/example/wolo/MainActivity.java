@@ -1,4 +1,4 @@
-package com.example.wolo_app;
+package com.example.wolo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
