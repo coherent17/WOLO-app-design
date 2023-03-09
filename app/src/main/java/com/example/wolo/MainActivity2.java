@@ -77,36 +77,12 @@ public class MainActivity2 extends AppCompatActivity {
                             is = socket.getInputStream();
                             isr = new InputStreamReader(is);
                             br = new BufferedReader(isr);
-                            response = br.readLine();
-                            System.out.println("fsgfdg");
-                            System.out.println(response);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
-                    }
-                });
 
-            }
-        });
-
-        tvMessages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // 利用线程池直接开启一个线程 & 执行该线程
-                mThreadPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            is = socket.getInputStream();
-                            isr = new InputStreamReader(is);
-                            br = new BufferedReader(isr);
-                            response = br.readLine();
-                            Message msg = Message.obtain();
-                            msg.what = 0;
-                            mMainHandler.sendMessage(msg);
+                            while(true){
+                                response = br.readLine();
+                                System.out.println(response);
+                            }
 
                         } catch (IOException e) {
                             e.printStackTrace();
