@@ -1,98 +1,42 @@
 package com.example.wolo;
-import android.annotation.SuppressLint;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    private Handler mMainHandler;
-    private Socket socket;
-    private ExecutorService mThreadPool;
-    String response;
+    private Button entry_button;
+    private EditText etIP;
+    private EditText etPort;
 
-    EditText etIP, etPort;
-    TextView tvMessages;
-    String SERVER_IP;
-    int SERVER_PORT;
-
-    InputStream is;
-    InputStreamReader isr ;
-    BufferedReader br ;
-
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        entry_button = (Button) findViewById(R.id.entry_button);
+        etIP = (EditText) findViewById(R.id.etIP);
+        etPort = (EditText) findViewById(R.id.etPort);
 
-        etIP = findViewById(R.id.etIP);
-        etPort = findViewById(R.id.etPort);
-        tvMessages = findViewById(R.id.tvMessages);
-        Button btnConnect = findViewById(R.id.btnConnect);
-        mThreadPool = Executors.newCachedThreadPool();
-
-        mMainHandler = new Handler() {
+        entry_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void handleMessage(Message msg) {
-                System.out.println(response);
-                tvMessages.setText(response);
-            }
-        };
-
-        btnConnect.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                tvMessages.setText("");
-                SERVER_IP = etIP.getText().toString().trim();
-                SERVER_PORT = Integer.parseInt(etPort.getText().toString().trim());
-
-                mThreadPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-
-                            // 创建Socket对象 & 指定服务端的IP 及 端口号
-                            socket = new Socket(SERVER_IP, SERVER_PORT);
-
-                            System.out.println(socket.isConnected());
-
-                            is = socket.getInputStream();
-                            isr = new InputStreamReader(is);
-                            br = new BufferedReader(isr);
-
-
-                            while(true){
-                                response = br.readLine();
-                                System.out.println(response);
-                            }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-
+            public void onClick(View v) {
+                entryNextPage();
             }
         });
+    }
 
+    public void entryNextPage(){
+        Intent intent = new Intent(this, MainActivity3.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("IP", etIP.getText().toString().trim());
+        bundle.putInt("Port", Integer.parseInt(etPort.getText().toString().trim()));
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
