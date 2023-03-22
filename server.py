@@ -23,11 +23,15 @@ while True:
     print('connected by ' + str(addr))
 
     while True:
-        idx = random.randint(0,len(names) - 1)
-        msg = names[idx] + '\r'
-        conn.send(msg.encode())
-        time.sleep(0.1)
-
-
+        num_bbox = random.randint(1,6)
+        for i in range(num_bbox):
+            idx = random.randint(0,len(names) - 1)
+            msg = names[idx] + '\r'
+            conn.send(msg.encode())
+            print(msg)
+            time.sleep(0.001)
+        time.sleep(2)   #the image display time for 1 frame
+        conn.send("finish\r".encode())
+        print("----------")
 
 s.close()
