@@ -1,30 +1,40 @@
 package com.example.wolo;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.WindowManager;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 3500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // on below line we are configuring our window to full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+
+        // on below line we are calling handler to run a task
+        // for specific time interval
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent homeIntent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(homeIntent);
+                // on below line we are
+                // creating a new intent
+                Intent i = new Intent(MainActivity.this, MainActivity2.class);
+
+                // on below line we are
+                // starting a new activity.
+                startActivity(i);
+
+                // on the below line we are finishing
+                // our current activity.
                 finish();
             }
-        }, SPLASH_TIME_OUT);
+        }, 2000);
+
     }
 }

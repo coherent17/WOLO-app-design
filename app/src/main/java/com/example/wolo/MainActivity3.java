@@ -2,9 +2,11 @@ package com.example.wolo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +21,6 @@ public class MainActivity3 extends AppCompatActivity {
     Socket socket;
     MyCanvas canvas;
 
-    public static Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +35,6 @@ public class MainActivity3 extends AppCompatActivity {
         Thread t = new Thread(readData);
         t.start();
     }
-
-    private Runnable updateImg = new Runnable() {
-        public void run() {
-//            ImageView imageView = new ImageView(MainActivity3.this);
-//            imageView.setImageResource(R.drawable.car);
-//            imageView.setY(number);
-//            imageView.setX(number);
-        }
-    };
-
 
 
     private Runnable readData = new Runnable() {
@@ -84,17 +75,11 @@ public class MainActivity3 extends AppCompatActivity {
                             canvas.invalidate();
 
                         }
-//                        if(!temp.equals("finish")){
-//                            mHandler.post(updateText);
-//                        }
-//                        else{
-//                            mHandler.post(ResetImage);
-//                        }
                     }
 
                 }
             } catch (IOException e) {
-
+                System.out.println("Fail");
             }
         }
     };
